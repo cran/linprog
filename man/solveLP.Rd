@@ -8,16 +8,21 @@
 }
 
 \usage{
-   solveLP( cvec, bvec, Amat, maximum=FALSE, maxiter=1000, verbose=FALSE )
+   solveLP( cvec, bvec, Amat, maximum=FALSE, maxiter=1000,
+            zero=1e-10, lpSolve=FALSE, verbose=FALSE )
 }
 
 \arguments{
-  \item{cvec}{vector \eqn{c} (containing \eqn{n} elements).}
-  \item{bvec}{vector \eqn{b} (containing \eqn{m} elements).}
-  \item{Amat}{matrix A (of dimension \eqn{m \times n}).}
-  \item{maximum}{logical. Should we maximize or minimize (the default)?}
-  \item{maxiter}{maximum number of iterations.}
-  \item{verbose}{an optional logic variable to indicate whether interim
+   \item{cvec}{vector \eqn{c} (containing \eqn{n} elements).}
+   \item{bvec}{vector \eqn{b} (containing \eqn{m} elements).}
+   \item{Amat}{matrix A (of dimension \eqn{m \times n}).}
+   \item{maximum}{logical. Should we maximize or minimize (the default)?}
+   \item{maxiter}{maximum number of iterations.}
+   \item{zero}{numbers smaller than this value (in absolute terms) are
+      set to zero.}
+   \item{lpSolve}{logical. Should the package 'lpSolve' be used to solve
+      the LP problem?}
+   \item{verbose}{an optional logic variable to indicate whether interim
       results should be printed.}
 }
 
@@ -27,6 +32,18 @@
    and stability analysis).\cr
    If the solution \eqn{x=0} is not feasible, a 2-phase procedure is
    applied.\cr
+   Values of the simplex tableau that are actually zero might get small
+   (positive or negative) numbers due to rounding errors, which might
+   lead to artificial restrictions. Therefore, all values that are smaller
+   (in absolute terms) than the value of \code{zero} (default is 1e-10) are
+   set to 0.\cr
+   Solving the Linear Programming problem by the package \code{lpSolve}
+   (of course) requires the installation of this package, which is available
+   on CRAN (\url{http://cran.r-project.org/src/contrib/PACKAGES.html#lpSolve}).
+   Since the \code{lpSolve} package uses C-code and this (\code{linprog})
+   package is not optimized for speed, the former is much faster.
+   However, this package provides more detailed results (e.g. dual values,
+   stability and sensitivity analysis).\cr
    This function has not been tested extensively and might not solve all
    feasible problems (or might even lead to wrong results). However, you can
    export your LP to a standard MPS file via \code{\link{writeMps}} and check
@@ -40,6 +57,7 @@
   containing following objects:
 
   \item{opt}{optimal value (minimum or maximum) of the objective function.}
+  \item{solution}{vector of optimal values of the variables.}
   \item{iter1}{iterations of Simplex algorithm in phase 1
             (is negative if it equals 'maxiter').}
   \item{iter2}{iterations of Simplex algorithm in phase 2
@@ -61,6 +79,8 @@
    \item{maximum}{logical. Indicates whether the objective function
             was maximized or minimized.}
    \item{Tab}{final 'Tableau' of the Simplex algorith.}
+   \item{lpSolve}{logical. Has the package 'lpSolve' been used to solve
+      the LP problem.}
 }
 
 \references{

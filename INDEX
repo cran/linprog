@@ -1,6 +1,6 @@
-print.LinProg           print.linprog
+print.solveLP           print.linprog
 readMps                 read MPS files
-linprog                 solve Linear Programming / Optimization
+solveLP                 solve Linear Programming / Optimization
                         problems
-summary.LinProg         summary.linprog
+summary.solveLP         summary.linprog
 writeMps                write MPS files
