@@ -7,7 +7,7 @@
 }
 
 \usage{
-   summary.solveLP(object,...)
+   \method{summary}{solveLP}(object,...)
 }
 
 \arguments{

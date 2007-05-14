@@ -7,7 +7,7 @@
 }
 
 \usage{
-print.solveLP( x, digits=6, ...)
+   \method{print}{solveLP}( x, digits=6, ...)
 }
 
 \arguments{
