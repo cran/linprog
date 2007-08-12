@@ -91,11 +91,11 @@
   John Wiley \& Sons, New York, p. 339-347.
 
   Steinhauser, Hugo; Cay Langbehn and Uwe Peters (1992),
-  Einführung in die landwirtschaftliche Betriebslehre. Allgemeiner Teil,
+  Einfuehrung in die landwirtschaftliche Betriebslehre. Allgemeiner Teil,
   5th ed., Ulmer, Stuttgart.
 
-  Witte, Thomas; Jörg-Frieder Deppe and Axel Born (1975),
-  Lineare Programmierung. Einführung für Wirtschaftswissenschaftler,
+  Witte, Thomas; Joerg-Frieder Deppe and Axel Born (1975),
+  Lineare Programmierung. Einfuehrung fuer Wirtschaftswissenschaftler,
   Gabler-Verlag, Wiesbaden.
 
 }
