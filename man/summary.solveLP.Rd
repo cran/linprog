@@ -1,26 +1,32 @@
 \name{summary.solveLP}
 \alias{summary.solveLP}
-\title{summary.solveLP}
+\alias{print.summary.solveLP}
+\title{Summary Results for Objects of Class solveLP}
 
 \description{
-  This function returns the results of the Linear Programming function.
+  These methods prepare and print summary results of the Linear Programming
+  algorithm.
 }
 
 \usage{
    \method{summary}{solveLP}(object,...)
+   \method{print}{summary.solveLP}(x,...)
 }
 
 \arguments{
-  \item{object}{an object of type \code{solveLP}.}
-  \item{...}{not used by user.}
+  \item{object}{an object returned by \code{\link{solveLP}}.}
+  \item{x}{an object returned by \code{summary.solveLP}.}
+  \item{...}{currently ignored.}
 }
 
 \value{
-  \code{summary.solveLP} returns an object of type \code{solveLP}.
+  \code{summary.solveLP} returns an object of class \code{summary.solveLP}.
+  \code{print.summary.solveLP} invisibly returns the object given
+  in argument \code{x}.
 }
 
 \author{
-   Arne Henningsen \email{ahenningsen@agric-econ.uni-kiel.de}
+   Arne Henningsen
 }
 
 \seealso{
@@ -50,8 +56,8 @@ Amat <- rbind( c(  0.7,   0.35,   0 ),
 ## Maximize the gross margin
 res <- solveLP( cvec, bvec, Amat, TRUE )
 
-## print the results
-summary.solveLP( res )
+## prepare and print the summary results
+summary( res )
 }
 
 \keyword{ optimize }

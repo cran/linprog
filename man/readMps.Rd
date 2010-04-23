@@ -1,7 +1,7 @@
 \name{readMps}
 \alias{readMps}
 
-\title{read MPS files}
+\title{Read MPS Files}
 
 \description{
   This function reads MPS files - the standard format for Linear Programming problems.
@@ -34,7 +34,7 @@
 }
 
 \author{
-   Arne Henningsen \email{ahenningsen@agric-econ.uni-kiel.de}
+   Arne Henningsen
 }
 
 \seealso{
@@ -45,11 +45,9 @@
 \examples{
 
 ## example of Steinhauser, Langbehn and Peters (1992)
-\dontrun{library( linprog )}
-
 ## Production activities
 cvec <- c(1800, 600, 600)  # gross margins
-names(cvec) <- c("Milk","Bulls","Pigs")
+names(cvec) <- c("Cows","Bulls","Pigs")
 
 ## Constraints (quasi-fix factors)
 bvec <- c(40, 90, 2500)  # endowment

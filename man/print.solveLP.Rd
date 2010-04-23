@@ -1,9 +1,9 @@
 \name{print.solveLP}
 \alias{print.solveLP}
-\title{print.solveLP}
+\title{Print Objects of Class solveLP}
 
 \description{
-  This function returns the results of the Linear Programming function.
+  This method prints the results of the Linear Programming algorithm.
 }
 
 \usage{
@@ -11,17 +11,17 @@
 }
 
 \arguments{
-  \item{x}{an object of type \code{solveLP}.}
+  \item{x}{an object returned by \code{\link{solveLP}}.}
   \item{digits}{number of digits to print.}
-  \item{...}{not used by user.}
+  \item{...}{currently ignored.}
 }
 
 \value{
-  \code{print.solveLP} returns an object of type \code{solveLP}.
+  \code{print.solveLP} invisibly returns the object given in argument \code{x}.
 }
 
 \author{
-   Arne Henningsen \email{ahenningsen@agric-econ.uni-kiel.de}
+   Arne Henningsen
 }
 
 \seealso{
@@ -52,7 +52,7 @@ Amat <- rbind( c(  0.7,   0.35,   0 ),
 res <- solveLP( cvec, bvec, Amat, TRUE )
 
 ## print the results
-print.solveLP( res )
+print( res )
 }
 
 \keyword{ optimize }

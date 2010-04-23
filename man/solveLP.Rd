@@ -1,15 +1,20 @@
 \name{solveLP}
 \alias{solveLP}
 
-\title{ solve Linear Programming / Optimization problems }
+\title{Solve Linear Programming / Optimization Problems}
 
 \description{
-  Minimizes \eqn{c'x}, subject to \eqn{A x <= b} and \eqn{x >= 0}.
+  Minimizes (or maximizes) \eqn{c'x}, subject to \eqn{A x <= b} and \eqn{x >= 0}.
+
+Note that the inequality signs \code{<=} of the individual linear constraints
+in \eqn{A x <= b} can be changed with argument \code{const.dir}.
 }
 
 \usage{
-   solveLP( cvec, bvec, Amat, maximum=FALSE, maxiter=1000,
-            zero=1e-10, lpSolve=FALSE, verbose=FALSE )
+solveLP( cvec, bvec, Amat, maximum = FALSE,
+   const.dir = rep( "<=", length( bvec ) ),
+   maxiter = 1000, zero = 1e-9, tol = 1e-6, dualtol = tol,
+   lpSolve = FALSE, solve.dual = FALSE, verbose = 0 )
 }
 
 \arguments{
@@ -17,13 +22,23 @@
    \item{bvec}{vector \eqn{b} (containing \eqn{m} elements).}
    \item{Amat}{matrix A (of dimension \eqn{m \times n}).}
    \item{maximum}{logical. Should we maximize or minimize (the default)?}
+   \item{const.dir}{vector of character strings giving the directions
+      of the constraints: each value should be one of "<," "<=," "=," "==,"
+      ">," or ">=". (In each pair the two values are identical.)}
    \item{maxiter}{maximum number of iterations.}
    \item{zero}{numbers smaller than this value (in absolute terms) are
       set to zero.}
+   \item{tol}{if the constraints are violated by more than this number,
+      the returned component \code{status} is set to \code{3}.}
+   \item{dualtol}{if the constraints in the dual problem are violated by more
+      than this number, the returned status is non-zero.}
    \item{lpSolve}{logical. Should the package 'lpSolve' be used to solve
       the LP problem?}
-   \item{verbose}{an optional logic variable to indicate whether interim
-      results should be printed.}
+   \item{solve.dual}{logical value indicating if the dual problem should
+      also be solved.}
+   \item{verbose}{an optional integer variable to indicate how many
+      intermediate results should be printed
+      (0 = no output; 4 = maximum output).}
 }
 
 \details{
@@ -58,10 +73,8 @@
 
   \item{opt}{optimal value (minimum or maximum) of the objective function.}
   \item{solution}{vector of optimal values of the variables.}
-  \item{iter1}{iterations of Simplex algorithm in phase 1
-            (is negative if it equals 'maxiter').}
-  \item{iter2}{iterations of Simplex algorithm in phase 2
-            (is negative if it equals 'maxiter').}
+  \item{iter1}{iterations of Simplex algorithm in phase 1.}
+  \item{iter2}{iterations of Simplex algorithm in phase 2.}
   \item{basvar}{vector of basic (=non-zero) variables (at optimum).}
   \item{con}{matrix of results regarding the constraints:\cr
             1st column = maximum values (=vector \eqn{b});\cr
@@ -76,11 +89,26 @@
             4th column = maximum of vector \eqn{c} that does \emph{not} change the solution;\cr
             5th column = derivatives to the objective function;\cr
             6th column = valid region for these derivatives.}
+   \item{status}{numeric. Indicates if the optimization did succeed:\cr
+      0 = success; 1 = lpSolve did not succeed;
+      2 = solving the dual problem did not succeed;
+      3 = constraints are violated at the solution
+         (internal error or large rounding errors);
+      4 = simplex algorithm phase 1 did not find a solution within
+         the number of iterations specified by argument \code{maxiter};
+      5 = simplex algorithm phase 2 did not find the optimal solution within
+         the number of iterations specified by argument \code{maxiter}.}
+   \item{lpStatus}{numeric. Return code of \code{\link[lpSolve]{lp}}
+      (only if argument \code{lpSolve} is \code{TRUE}).}
+   \item{dualStatus}{numeric. Return code from solving the dual problem
+      (only if argument \code{solve.dual} is \code{TRUE}).}
    \item{maximum}{logical. Indicates whether the objective function
             was maximized or minimized.}
    \item{Tab}{final 'Tableau' of the Simplex algorith.}
    \item{lpSolve}{logical. Has the package 'lpSolve' been used to solve
       the LP problem.}
+   \item{solve.dual}{logical. Argument \code{solve.dual}.}
+   \item{maxiter}{numeric. Argument \code{maxiter}.}
 }
 
 \references{
@@ -101,7 +129,7 @@
 }
 
 \author{
-   Arne Henningsen \email{ahenningsen@agric-econ.uni-kiel.de}
+   Arne Henningsen
 }
 
 \seealso{
@@ -111,11 +139,9 @@
 \examples{
 
 ## example of Steinhauser, Langbehn and Peters (1992)
-\dontrun{library( linprog )}
-
 ## Production activities
 cvec <- c(1800, 600, 600)  # gross margins
-names(cvec) <- c("Milk","Bulls","Pigs")
+names(cvec) <- c("Cows","Bulls","Pigs")
 
 ## Constraints (quasi-fix factors)
 bvec <- c(40, 90, 2500)  # endowment
@@ -131,13 +157,11 @@ solveLP( cvec, bvec, Amat, TRUE )
 
 
 ## example 1.1.3 of Witte, Deppe and Born (1975)
-\dontrun{library( linprog )}
-
 ## Two types of Feed
 cvec <- c(2.5, 2 )  # prices of feed
 names(cvec) <- c("Feed1","Feed2")
 
-## Constraints (minimum (<0) and maximum (<0) contents)
+## Constraints (minimum (<0) and maximum (>0) contents)
 bvec <- c(-10, -1.5, 12)
 names(bvec) <- c("Protein","Fat","Fibre")
 
@@ -148,6 +172,9 @@ Amat <- rbind( c( -1.6,  -2.4 ),
 
 ## Minimize the cost
 solveLP( cvec, bvec, Amat )
+
+# the same optimisation using argument const.dir
+solveLP( cvec, abs( bvec ), abs( Amat ), const.dir = c( ">=", ">=", "<=" ) )
 
 
 ## There are also several other ways to put the data into the arrays, e.g.:

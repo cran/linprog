@@ -1,7 +1,7 @@
 \name{writeMps}
 \alias{writeMps}
 
-\title{write MPS files}
+\title{Write MPS Files}
 
 \description{
   This function writes MPS files - the standard format for Linear Programming problems.
@@ -24,7 +24,7 @@ writeMps( file, cvec, bvec, Amat, name="LP" )
    (e.g. \code{lp_solve}, see \url{ftp://ftp.es.ele.tue.nl/pub/lp_solve}).
 }
 
-\author{Arne Henningsen \email{ahenningsen@agric-econ.uni-kiel.de}}
+\author{Arne Henningsen}
 
 \seealso{\code{\link{solveLP}}, \code{\link{readMps}}
 }
@@ -33,11 +33,9 @@ writeMps( file, cvec, bvec, Amat, name="LP" )
 \examples{
 
 ## example of Steinhauser, Langbehn and Peters (1992)
-\dontrun{library( linprog )}
-
 ## Production activities
 cvec <- c(1800, 600, 600)  # gross margins
-names(cvec) <- c("Milk","Bulls","Pigs")
+names(cvec) <- c("Cows","Bulls","Pigs")
 
 ## Constraints (quasi-fix factors)
 bvec <- c(40, 90, 2500)  # endowment

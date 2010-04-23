@@ -1,6 +1,6 @@
-print.solveLP           print.solveLP
-readMps                 read MPS files
-solveLP                 solve Linear Programming / Optimization
-                        problems
-summary.solveLP         summary.solveLP
-writeMps                write MPS files
+print.solveLP           Print Objects of Class solveLP
+readMps                 Read MPS Files
+solveLP                 Solve Linear Programming / Optimization
+                        Problems
+summary.solveLP         Summary Results for Objects of Class solveLP
+writeMps                Write MPS Files
