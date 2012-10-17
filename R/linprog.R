@@ -24,6 +24,15 @@ solveLP <- function( cvec, bvec, Amat, maximum=FALSE,
          const.dir == "==" | const.dir == "<=" | const.dir == "<" ) < nCon ) {
        stop( "'const.dir' may only contain '>=', '>', '=', '==', '<=' or '<'" )
    }
+   if( any( const.dir %in% c( "=", "==" ) ) && ( ! lpSolve ) ) {
+      warning( "solveLP() might return incorrect results",
+         " if the model includes equality constraints",
+         " and argument 'lpSolve' is 'FALSE';",
+         " please check if solveLP() returns the same results",
+         " with argument 'lpSolve' equal to 'TRUE';",
+         " more information on this bug available at",
+         " linprog's R-Forge site" )
+   }
 
    ## Labels
    if( is.null(names(cvec))) {
@@ -256,10 +265,9 @@ solveLP <- function( cvec, bvec, Amat, maximum=FALSE,
             quot <- Tab[ nCon+1, 1:(nVar+nCon) ] / Tab[ which(basis==i), 1:(nVar+nCon) ]
             if( maximum ) {
                if(max(quot[!is.na(quot)]) > 0 ) {
-                  op <- options()
-                  options(warn=-1)
-                  allvar$min.c[ i ] <- cvec2[ i ] - min(quot[quot>0 & !is.na(quot)])
-                  options(op)
+                  suppressWarnings(
+                     allvar$min.c[ i ] <- cvec2[ i ] - min(quot[quot>0 & !is.na(quot)])
+                  )
                }
                if(min(quot[!is.na(quot) & is.finite(quot)]) < 0 ) {
                   if(max(quot[quot<0 & !is.na(quot)]) > -1e14 ) {
@@ -272,10 +280,9 @@ solveLP <- function( cvec, bvec, Amat, maximum=FALSE,
                }
             } else {
                if(max(quot[!is.na(quot)]) > 0 ) {
-                  op <- options()
-                  options(warn=-1)
-                  allvar$max.c[ i ] <- cvec2[ i ] + min(quot[quot>0 & !is.na(quot)])
-                  options(op)
+                  suppressWarnings(
+                     allvar$max.c[ i ] <- cvec2[ i ] + min(quot[quot>0 & !is.na(quot)])
+                  )
                }
                if(min(quot[!is.na(quot)]) < 0 ) {
                   if(max(quot[quot<0 & !is.na(quot)]) > -1e14 ){
@@ -314,14 +321,13 @@ solveLP <- function( cvec, bvec, Amat, maximum=FALSE,
                }
             }
             quot <- Tab[ 1:nCon , nVar+nCon+1 ] / Tab[ 1:nCon, i ]
-            op <- options()
-            options(warn=-1)
-            if( !( i %in% basis) ) {
-               allvar$marg.reg[ i ] <- min(quot[quot>0 & !is.na(quot)])
-            } else {
-               allvar$marg.reg[ i ] <- NA
-            }
-            options(op)
+               suppressWarnings(
+               if( !( i %in% basis) ) {
+                  allvar$marg.reg[ i ] <- min(quot[quot>0 & !is.na(quot)])
+               } else {
+                  allvar$marg.reg[ i ] <- NA
+               }
+            )
          }
       }
       allvar$min.c[ allvar$min.c >  1e16 ] <-  Inf
