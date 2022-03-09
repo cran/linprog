@@ -51,7 +51,6 @@ solveLP <- function( cvec, bvec, Amat, maximum=FALSE,
 
    ## lpSolve
    if( lpSolve ) {
-      library( lpSolve )
       if( maximum ) {
          direction <- "max"
       } else {

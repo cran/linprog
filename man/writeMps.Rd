@@ -21,7 +21,7 @@ writeMps( file, cvec, bvec, Amat, name="LP" )
 
 \details{
    The exported LP can be solved by running other software on this MPS file
-   (e.g. \code{lp_solve}, see \url{ftp://ftp.es.ele.tue.nl/pub/lp_solve}).
+   (e.g. \code{lp_solve}, see \url{http://lpsolve.sourceforge.net/5.5/}).
 }
 
 \author{Arne Henningsen}
@@ -48,6 +48,9 @@ Amat <- rbind( c(  0.7,   0.35,   0 ),
 
 ## Write to MPS file
 writeMps( "steinh.mps", cvec, bvec, Amat, "Steinhauser" )
+
+## remove the MPS file
+file.remove( "steinh.mps" )
 }
 
 \keyword{ optimize }

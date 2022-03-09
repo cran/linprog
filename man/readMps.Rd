@@ -70,6 +70,8 @@ lp <- readMps( "steinh.mps", TRUE, TRUE )
 ## Print the results
 lp$res
 
+## remove the MPS file
+file.remove( "steinh.mps" )
 }
 
 \keyword{ optimize }

@@ -54,7 +54,7 @@ solveLP( cvec, bvec, Amat, maximum = FALSE,
    set to 0.\cr
    Solving the Linear Programming problem by the package \code{lpSolve}
    (of course) requires the installation of this package, which is available
-   on CRAN (\url{http://cran.r-project.org/src/contrib/PACKAGES.html#lpSolve}).
+   on CRAN (\url{https://cran.r-project.org/package=lpSolve}).
    Since the \code{lpSolve} package uses C-code and this (\code{linprog})
    package is not optimized for speed, the former is much faster.
    However, this package provides more detailed results (e.g. dual values,
@@ -63,7 +63,7 @@ solveLP( cvec, bvec, Amat, maximum = FALSE,
    feasible problems (or might even lead to wrong results). However, you can
    export your LP to a standard MPS file via \code{\link{writeMps}} and check
    it with other software (e.g. \code{lp_solve}, see
-   \url{ftp://ftp.es.ele.tue.nl/pub/lp_solve}).\cr
+   \url{http://lpsolve.sourceforge.net/5.5/}).\cr
    Equality constraints are not implemented yet.
 }
 

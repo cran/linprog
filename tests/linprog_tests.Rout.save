@@ -1,7 +1,7 @@
 
-R version 2.10.1 (2009-12-14)
-Copyright (C) 2009 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -145,8 +145,8 @@ attr(,"class")
 Land     39.2  <=   40  0.8   0.0      0.8    0.0
 Stable   90.0  <=   90  0.0 240.0     15.0  240.0
 Labor  2500.0  <= 2500  0.0  28.8   1375.0   28.8
-> all.equal( result1a[-12], result1aD[-c(10,13)] )
-[1] "Component 8: Length mismatch: comparison on first 6 components"
+> all.equal( result1a[-c(8,12)], result1aD[-c(8,10,13)] )
+[1] TRUE
 > 
 > # estimation with verbose = TRUE
 > result1b <- solveLP( cvec, bvec, Amat, TRUE, verbose = 4 )
@@ -368,8 +368,8 @@ attr(,"class")
 Land     39.2  <=   40  0.8   0.0
 Stable   90.0  <=   90  0.0 240.0
 Labor  2500.0  <= 2500  0.0  28.8
-> all.equal( result1c[-8], result1cD[-c(6,9)] )
-[1] "Component 5: Length mismatch: comparison on first 4 components"
+> all.equal( result1c[-c(5,8)], result1cD[-c(5,6,9)] )
+[1] TRUE
 > 
 > # using argument const.dir
 > const.dir <- c( ">=", ">=", ">=" )
@@ -584,8 +584,8 @@ attr(,"class")
 Protein -10.000000  <= -10.0 0.000000 0.5681818 3.600000 0.5681818
 Fat      -1.500000  <=  -1.5 0.000000 3.1818182 1.350000 3.1818182
 Fibre     9.545455  <=  12.0 2.454545 0.0000000 2.454545 0.0000000
-> all.equal( result2a[-12], result2aD[-c(10,13)] )
-[1] "Component 8: Length mismatch: comparison on first 6 components"
+> all.equal( result2a[-c(8,12)], result2aD[-c(8,10,13)] )
+[1] TRUE
 > 
 > # estimation with verbose = TRUE
 > result2b <- solveLP( cvec, bvec, Amat, verbose = 4 )
@@ -784,8 +784,8 @@ attr(,"class")
 Protein -10.000000  <= -10.0 0.000000 0.5681818
 Fat      -1.500000  <=  -1.5 0.000000 3.1818182
 Fibre     9.545455  <=  12.0 2.454545 0.0000000
-> all.equal( result2c[-8], result2cD[-c(6,9)] )
-[1] "Component 5: Length mismatch: comparison on first 4 components"
+> all.equal( result2c[-c(5,8)], result2cD[-c(5,6,9)] )
+[1] TRUE
 > 
 > # using argument const.dir
 > const.dir <- c( ">=", ">=", "<=" )
@@ -875,3 +875,6 @@ Fibre    9.545455  <= 12.0 2.454545 0.0000000
 > 
 > 
 > 
+> proc.time()
+   user  system elapsed 
+  0.206   0.017   0.214 
